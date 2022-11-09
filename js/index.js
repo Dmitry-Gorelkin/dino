@@ -1,7 +1,7 @@
 const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
 
-const instance = basicLightbox.create(
+const gameOver = basicLightbox.create(
   `
     <div class="modal box">
         <h1>
@@ -31,10 +31,7 @@ function jump(e) {
   }, 300);
 }
 
-document.addEventListener("keydown", jump);
-cactus.classList.add("action");
-
-setInterval(() => {
+function confluenceDinoCactus() {
   const dinoTop = parseInt(
     window.getComputedStyle(dino).getPropertyValue("top")
   );
@@ -44,6 +41,11 @@ setInterval(() => {
 
   if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 140) {
     cactus.classList.remove("action");
-    instance.show();
+    gameOver.show();
   }
-}, 10);
+}
+
+document.addEventListener("keydown", jump);
+cactus.classList.add("action");
+
+setInterval(confluenceDinoCactus, 10);
