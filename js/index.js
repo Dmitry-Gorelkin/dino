@@ -10,14 +10,15 @@ const instance = basicLightbox.create(
     </div>
 `,
   {
+    onShow: () => {
+      document.removeEventListener("keydown", jump);
+    },
     onClose: () => {
+      document.addEventListener("keydown", jump);
       cactus.classList.add("action");
     },
   }
 );
-
-document.addEventListener("keydown", jump);
-cactus.classList.add("action");
 
 function jump(e) {
   if (e.code != "Space") return;
@@ -29,6 +30,9 @@ function jump(e) {
     dino.classList.remove("jump");
   }, 300);
 }
+
+document.addEventListener("keydown", jump);
+cactus.classList.add("action");
 
 setInterval(() => {
   const dinoTop = parseInt(
