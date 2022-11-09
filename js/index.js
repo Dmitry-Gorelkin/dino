@@ -4,9 +4,9 @@ const cactus = document.getElementById("cactus");
 const instance = basicLightbox.create(
   `
     <div class="modal box">
-        <p>
+        <h1>
             Game Over
-        </p>
+        </h1>
     </div>
 `,
   {
