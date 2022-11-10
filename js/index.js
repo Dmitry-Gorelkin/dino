@@ -1,34 +1,43 @@
-const dino = document.getElementById("dino");
-const cactus = document.getElementById("cactus");
+const dino = document.getElementById("dino-js");
+const cactus = document.getElementById("cactus-js");
+const scores = document.getElementById("scores-js");
+let score = 0;
 let timer = null;
-
-const gameOver = basicLightbox.create(
-  `
-    <div class="modal box">
-        <h1>
-            Game Over
-        </h1>
-    </div>
-`,
-  {
-    onShow: () => {
-      stopGame();
-    },
-    onClose: () => {
-      startGame();
-    },
-  }
-);
 
 function startGame() {
   document.addEventListener("keydown", jump);
   cactus.classList.add("action");
   timer = setInterval(confluenceDinoCactus, 10);
+  score = 0;
 }
 
 function stopGame() {
   document.removeEventListener("keydown", jump);
+  cactus.classList.remove("action");
   clearInterval(timer);
+}
+
+function gameOver() {
+  const gameOver = basicLightbox.create(
+    `
+    <div class="modal box">
+        <h2>
+            Game Over
+        </h2>
+        <p>Scores: ${score}</p>
+    </div>
+`,
+    {
+      onShow: () => {
+        stopGame();
+      },
+      onClose: () => {
+        startGame();
+      },
+    }
+  );
+
+  gameOver.show();
 }
 
 function jump(e) {
@@ -40,6 +49,8 @@ function jump(e) {
   setTimeout(function () {
     dino.classList.remove("jump");
   }, 300);
+
+  score = calculationScore(score);
 }
 
 function confluenceDinoCactus() {
@@ -51,9 +62,14 @@ function confluenceDinoCactus() {
   );
 
   if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 140) {
-    cactus.classList.remove("action");
-    gameOver.show();
+    gameOver();
   }
+
+  scores.innerHTML = score;
+}
+
+function calculationScore(score) {
+  return (score += 1);
 }
 
 startGame();
