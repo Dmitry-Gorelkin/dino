@@ -1,5 +1,6 @@
 const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
+let timer = null;
 
 const gameOver = basicLightbox.create(
   `
@@ -11,14 +12,24 @@ const gameOver = basicLightbox.create(
 `,
   {
     onShow: () => {
-      document.removeEventListener("keydown", jump);
+      stopGame();
     },
     onClose: () => {
-      document.addEventListener("keydown", jump);
-      cactus.classList.add("action");
+      startGame();
     },
   }
 );
+
+function startGame() {
+  document.addEventListener("keydown", jump);
+  cactus.classList.add("action");
+  timer = setInterval(confluenceDinoCactus, 10);
+}
+
+function stopGame() {
+  document.removeEventListener("keydown", jump);
+  clearInterval(timer);
+}
 
 function jump(e) {
   if (e.code != "Space") return;
@@ -45,7 +56,4 @@ function confluenceDinoCactus() {
   }
 }
 
-document.addEventListener("keydown", jump);
-cactus.classList.add("action");
-
-setInterval(confluenceDinoCactus, 10);
+startGame();
