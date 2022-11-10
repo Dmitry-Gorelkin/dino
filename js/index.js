@@ -17,8 +17,8 @@ function stopGame() {
   clearInterval(timer);
 }
 
-function gameOver() {
-  const gameOver = basicLightbox.create(
+function gameOverGame() {
+  const gameOverModal = basicLightbox.create(
     `
     <div class="modal box">
         <h2>
@@ -37,7 +37,7 @@ function gameOver() {
     }
   );
 
-  gameOver.show();
+  gameOverModal.show();
 }
 
 function jump(e) {
@@ -50,7 +50,7 @@ function jump(e) {
     dino.classList.remove("jump");
   }, 300);
 
-  score = calculationScore(score);
+  score += 1;
 }
 
 function confluenceDinoCactus() {
@@ -62,14 +62,10 @@ function confluenceDinoCactus() {
   );
 
   if (cactusLeft < 50 && cactusLeft > 0 && dinoTop >= 140) {
-    gameOver();
+    gameOverGame();
   }
 
   scores.innerHTML = score;
-}
-
-function calculationScore(score) {
-  return (score += 1);
 }
 
 startGame();
